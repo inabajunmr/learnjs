@@ -13,6 +13,43 @@ describe(`LearnJS`, function() {
         spyOn(learnjs, 'problemView');
         learnjs.showView('#problem-42');
         expect(learnjs.problemView).toHaveBeenCalledWith('42');
+    });
+
+    describe('problem view', function(){
+        it('has a title that includes the problem number', function(){
+            var view = learnjs.problemView('1');
+            expect(view.find('.title').text()).toEqual('Problem #1 Coming soon!')
+        });
+
+        it('has a description that includes the problem number', function(){
+            var view = learnjs.problemView('1');
+            expect(view.find('.title').text()).toEqual('Problem #1 Coming soon!')
+            expect(view.find("[data-name='description']").text()).toEqual(learnjs.problems[0].description)
+        });
+
+        it('has a code that includes the problem number', function(){
+            var view = learnjs.problemView('1');
+            expect(view.find('.title').text()).toEqual('Problem #1 Coming soon!')
+            expect(view.find("[data-name='code']").text()).toEqual(learnjs.problems[0].code)
+        });
+
+        it('invokes the router when loaded', function() {
+            spyOn(learnjs, 'showView');
+            learnjs.appOnReady();
+            expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
+        });
+
+        it('subscribes to the hash change event', function(){
+            learnjs.appOnReady();
+            spyOn(learnjs, 'showView');
+            $(window).trigger('hashchange');
+            expect(learnjs.showView).toHaveBeenCalledWith(window.location.hash);
+        });
+
+        it('has a description by each problem number', function(){
+
+        });
     })
+
 });
 
