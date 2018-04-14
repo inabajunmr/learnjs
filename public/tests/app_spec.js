@@ -57,7 +57,8 @@ describe(`LearnJS`, function() {
 
             view.find('.answer').val('true');
             view.find('.check-btn').click();
-            expect(view.find('.result').text()).toEqual('Correct!');
+            expect(view.find('.result span').text()).toEqual('Correct!');
+            expect(view.find('.result a').text()).toEqual('Next Problem');
         });
 
         it('rejects an in correct answer', function(){
