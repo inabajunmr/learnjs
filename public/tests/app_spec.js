@@ -69,6 +69,15 @@ describe(`LearnJS`, function() {
             expect(view.find('.result').text()).toEqual('Incorrect!');
 
         });
+
+        it('can check a correct answer by hitting a button on last problem', function() {
+            var view = learnjs.problemView('2');
+
+            view.find('.answer').val('7');
+            view.find('.check-btn').click();
+            expect(view.find('.result span').text()).toEqual('Correct!');
+            expect(view.find('.result a').text()).toEqual("You're Finished");
+        });
     });
 
 });
