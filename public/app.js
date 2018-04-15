@@ -58,8 +58,9 @@ learnjs.problemView = function(data) {
 learnjs.showView = function(hash) {
     var routes = {
         '#problem': learnjs.problemView,
+        '#profile': learnjs.profileView,        
         '#': learnjs.landingView,
-        '': learnjs.landingView
+        '': learnjs.landingView,
     };
 
     var hashParts = hash.split('-');
@@ -76,6 +77,13 @@ learnjs.appOnReady = function() {
         learnjs.showView(window.location.hash);
     };
     learnjs.showView(window.location.hash);
+    learnjs.identity.done(learnjs.addProfileLink);
+}
+
+learnjs.addProfileLink = function(profile) {
+    var link = learnjs.template('profile-link');
+    link.find('a').text(profile.email);
+    $('.signin-bar').prepend(link);
 }
 
 learnjs.applyObject = function(obj, elem) {
@@ -161,3 +169,12 @@ learnjs.awsRefresh = function() {
     })
     return deferred.promise();
 }
+
+learnjs.profileView = function() {
+    var view = learnjs.template('profile-view');
+    learnjs.identity.done(function(identity) {
+        view.find(',email').text(identity.email);
+    });
+    return view;
+}
+
