@@ -1,6 +1,6 @@
 `use strict`;
 var learnjs = {
-    poolId: 'us-east-1:167342ea-f295-4ee4-85e5-3112ab994516'
+    poolId: 'us-east-1:f2e6631b-e08a-49ff-9f12-21ec57fe18b0'
 };
 
 learnjs.identity = new $.Deferred();
