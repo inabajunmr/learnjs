@@ -18,12 +18,12 @@ describe('lambda function', function() {
     });
     it('groups answers by minified code', function(){
       index.popularAnswers({problemNumber:1}, context);
-      index.dynamodb.scan.calls.first().args[1](underfined, {items:[
+      index.dynamodb.scan.calls.first().args[1](undefined, {items:[
         {answer:"true"},
         {answer:"true"},
         {answer:"true"},
         {answer:"!false"},
-        {answer:"false"},
+        {answer:"!false"},
       ]});
       expect(context.succeed).toHaveBeenCalledWith({"true" : 3, "!false": 2});
     });
