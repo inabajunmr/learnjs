@@ -45,7 +45,7 @@ exports.popularAnswers = function(json, context) {
     if(err) {
       context.fail(err);
     } else {
-      context.succeed(filterItems(reduceItems({}, data.items)));
+      context.succeed(filterItems(reduceItems({}, data.Items)));
     }
   });
 }
