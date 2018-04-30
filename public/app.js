@@ -55,6 +55,23 @@ learnjs.problemView = function(data) {
     }
   });
 
+  // 人気回答ビュー
+  learnjs.addPopularAnswersView = function(problemNumber) {
+    learnjs.identity.then(function() {
+      var view = learnjs.template('popular-answers-view');
+      learnjs.popularAnswers(problemNumber).then(function(answer) {
+        var answerJson = JSON.parse(answer.Payload);
+        for (var key in answerJson) {
+          var answerTag = $('<li>').text(' [ ' + key + ' ] ');
+          view.find('.answerlist').append(answerTag);
+        }
+        $('.view-container').append(view);
+      });
+    });
+  };
+
+  learnjs.addPopularAnswersView(problemNumber);
+
   view.find('.check-btn').click(checkAnswerClick); 
   view.find('.title').text('Problem #' + problemNumber);
   learnjs.applyObject(problemData, view);
@@ -187,6 +204,7 @@ learnjs.profileView = function() {
 learnjs.sendAwsRequest = function(req, retry){
     var promise = new $.Deferred();
     req.on('error', function(error) {
+        console.log(error);
         if(error.code === "CredentialsError") {
             learnjs.identity.then(function(identity){
                 return identity.refresh().then(function(){
@@ -255,11 +273,11 @@ learnjs.countAnswers = function(problemId) {
     })
 }
 
-learnjs.poplarAnswers = function(problemId) {
+learnjs.popularAnswers = function(problemId) {
     return learnjs.identity.then(function() {
         var lambda = new AWS.Lambda();
         var params = {
-            FunctionName: 'learnjs_popularAnswers',
+            FunctionName: 'popularAnswers',
             Payload: JSON.stringify({problemNumber: problemId})
         };
         return learnjs.sendAwsRequest(lambda.invoke(params), function(){
